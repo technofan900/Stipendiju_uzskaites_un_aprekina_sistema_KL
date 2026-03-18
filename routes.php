@@ -12,6 +12,9 @@ $router->get('/groups', 'group/GroupController.php');
 $router->get('/groups/create', 'group/GroupCreateController.php');
 $router->post('/groups/create', 'group/GroupCreateController.php');
 
+$router->get('/groups/bindSubject', 'group/GroupSubjectController.php');
+$router->post('/groups/bindSubject', 'group/GroupSubjectController.php');
+
 //student
 $router->get('/students', 'student/studentController.php');
 $router->get('/students/create', 'student/studentCreateController.php');

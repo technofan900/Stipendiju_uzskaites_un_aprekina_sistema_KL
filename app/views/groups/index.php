@@ -50,9 +50,9 @@ require base_path('app/views/partials/nav.php');
     <div class="d-flex justify-content-between mb-3">
         <h2>Grupu priekšmeti</h2>
 
-        <a href="/groups/create"
+        <a href="/groups/bindSubject"
            class="btn btn-success">
-            + Pievienot grupu
+            + Saistīt priekšmetu
         </a>
     </div>
 
@@ -65,8 +65,8 @@ require base_path('app/views/partials/nav.php');
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
-                        <th>Grupa</th>
                         <th>Priekšmets</th>
+                        <th>Grupa</th>
                         <th>Darbības</th>
                     </tr>
                 </thead>
@@ -74,8 +74,9 @@ require base_path('app/views/partials/nav.php');
                     <?php foreach($group_subjects as $g_subject) : ?>
                     <tr>
                         <td><?= $g_subject['id'] ?? '' ?></td>
-                        <td><?= $g_subject['group_name'] ?? '' ?></td>
                         <td><?= $g_subject['subject_name'] ?? '' ?></td>
+                        <td><?= $g_subject['group_name'] ?? '' ?></td>
+
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
