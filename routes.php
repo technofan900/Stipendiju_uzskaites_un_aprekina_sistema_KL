@@ -2,6 +2,9 @@
 //home
 $router->get('/', 'HomeController.php');
 
+// For deleting
+$router->delete('/delete', 'DeleteController.php');
+
 //subjects
 $router->get('/subjects', 'subject/SubjectController.php');
 $router->get('/subjects/create', 'subject/SubjectCreateController.php');

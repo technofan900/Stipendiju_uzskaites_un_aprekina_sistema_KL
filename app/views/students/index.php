@@ -23,10 +23,10 @@ require base_path('app/views/partials/nav.php');
                 <thead class="table-primary">
                     <tr>
                         <th>#</th>
-                        <th>Nosaukums</th>
                         <th>Grupas nosaukums</th>
                         <th>Vārds, uzvārds</th>
                         <th>Personas kods</th>
+                        <th>Izveidots</th>
                         <th>Darbības</th>
                     </tr>
                 </thead>
@@ -41,7 +41,21 @@ require base_path('app/views/partials/nav.php');
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
-                            <a class="btn btn-sm btn-danger">Dzēst</a>
+                            <form method="POST" action="/delete" style="display:inline;">
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="hidden" name="table" value="students">
+
+                                <input type="hidden" name="id" value="<?= $dd['id'] ?>">
+
+                                <input type="hidden" name="redirect" value="/students">
+
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Dzēst ierakstu?')">
+                                    Dzēst
+                                </button>
+
+                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>

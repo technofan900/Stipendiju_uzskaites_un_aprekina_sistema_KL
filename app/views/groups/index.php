@@ -36,7 +36,21 @@ require base_path('app/views/partials/nav.php');
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
-                            <a class="btn btn-sm btn-danger">Dzēst</a>
+                            <form method="POST" action="/delete" style="display:inline;">
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="hidden" name="table" value="groups">
+
+                                <input type="hidden" name="id" value="<?= $dd['id'] ?>">
+                                
+                                <input type="hidden" name="redirect" value="/groups">
+
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Dzēst ierakstu?')">
+                                    Dzēst
+                                </button>
+
+                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -80,7 +94,21 @@ require base_path('app/views/partials/nav.php');
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
-                            <a class="btn btn-sm btn-danger">Dzēst</a>
+                            <form method="POST" action="/delete" style="display:inline;">
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="hidden" name="table" value="group_subjects">
+
+                                <input type="hidden" name="id" value="<?= $g_subject['id'] ?>">
+
+                                <input type="hidden" name="redirect" value="/groups">
+
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Dzēst ierakstu?')">
+                                    Dzēst
+                                </button>
+
+                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>

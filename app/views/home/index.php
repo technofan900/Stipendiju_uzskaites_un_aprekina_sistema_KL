@@ -44,7 +44,22 @@ require base_path('app/views/partials/nav.php');
                     <td><?= $dd['created_at'] ?? '' ?></td>                    
                     <td>
                         <a href="/subjects/edit/<?= $dd['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
-                        <a href="/subjects/delete/<?= $dd['id'] ?>" class="btn btn-sm btn-danger">Dzēst</a>
+                        <!-- DELETE (universal) -->
+                        <form method="POST" action="/delete" style="display:inline;">
+
+                            <input type="hidden" name="_method" value="DELETE">
+
+                            <input type="hidden" name="table" value="student_stipend_records">
+
+                            <input type="hidden" name="id" value="<?= $dd['id'] ?>">
+
+                            <input type="hidden" name="redirect" value="/">
+
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Dzēst ierakstu?')">
+                                Dzēst
+                            </button>
+
+                        </form>
                     </td>
                 </tr>
 
