@@ -45,7 +45,7 @@
         if ($avg_grade >= 0 and $avg_grade < 4.0) {
             $base = 0;
         } elseif ($avg_grade >= 4.0 and $avg_grade < 6.0) {
-            $base = 16;
+            $base = 15;
         } elseif ($avg_grade >= 6.0 and $avg_grade < 8.0) {
             $base = 41;
         } elseif ($avg_grade >= 8.0 and $avg_grade <= 10) {
@@ -59,7 +59,13 @@
     }
 
     function total_stipend(float $base, float $extra): float {
-        return round($base + $extra, 2);
+        $stipend = 0;
+        if($base == 0) {
+            return $stipend;
+        } else {
+            return round($base + $extra, 2);
+        }
+
     }
 
 
