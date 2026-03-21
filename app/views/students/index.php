@@ -33,11 +33,11 @@ require base_path('app/views/partials/nav.php');
                 <tbody>
                     <?php foreach($data as $dd) : ?>
                     <tr>
-                        <td><?= $dd['id'] ?? '' ?></td>
-                        <td><?= $dd['group_name'] ?? '' ?></td>
-                        <td><?= $dd['full_name'] ?? '' ?></td>
-                        <td><?= $dd['personal_code'] ?? '' ?></td>
-                        <td><?= $dd['created_at'] ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['id']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['group_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['full_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['personal_code']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>

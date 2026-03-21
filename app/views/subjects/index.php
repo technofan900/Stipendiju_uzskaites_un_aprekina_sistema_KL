@@ -32,10 +32,10 @@ require base_path('app/views/partials/nav.php');
                 <tbody>
                     <?php foreach($data as $dd) : ?>
                     <tr>
-                        <td><?= $dd['id'] ?? '' ?></td>
-                        <td><?= $dd['subject_name'] ?? '' ?></td>
-                        <td><?= $dd['category_type'] ?? '' ?></td>
-                        <td><?= $dd['created_at'] ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['id']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['subject_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['category_type']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
@@ -89,10 +89,10 @@ require base_path('app/views/partials/nav.php');
                 <tbody>
                     <?php foreach($grades as $grade) : ?>
                     <tr>
-                        <td><?= $grade['id'] ?? '' ?></td>
-                        <td><?= $grade['student_name'] ?? '' ?></td>
-                        <td><?= $grade['subject_name'] ?? '' ?></td>
-                        <td><?= $grade['grade'] ?? '' ?></td>
+                        <td><?= htmlspecialchars($grade['id']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($grade['student_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($grade['subject_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($grade['grade']) ?? '' ?></td>
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>

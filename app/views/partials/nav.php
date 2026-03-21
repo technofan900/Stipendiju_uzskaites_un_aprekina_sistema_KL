@@ -31,6 +31,13 @@
                     <a class="nav-link" href="/subjects">Priekšmeti</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="/period">Periods</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn fw-bold ms-2" href="/search">Meklēt</a>
+                </li>
             </ul>
         </div>
 

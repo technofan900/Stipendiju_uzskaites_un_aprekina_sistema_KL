@@ -1,6 +1,8 @@
 <?php
 require base_path('app/views/partials/head.php');
 require base_path('app/views/partials/nav.php');
+
+$errors = $errors ?? [];
 ?>
 
 <div class="container mt-4">
@@ -29,6 +31,11 @@ require base_path('app/views/partials/nav.php');
                             </option>
                         <?php endforeach; ?>
                     </select>
+                    <?php if (!empty($errors['subject'])): ?>
+                        <div class="text-danger">
+                            <?= $errors['subject'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- GROUP CHECKBOXES -->
@@ -54,6 +61,18 @@ require base_path('app/views/partials/nav.php');
                             </label>
                         </div>
                     <?php endforeach; ?>
+
+                    <?php if (!empty($errors['groups'])): ?>
+                        <div class="text-danger">
+                            <?= $errors['groups'] ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($errors['duplicate'])): ?>
+                        <div class="text-danger">
+                            <?= $errors['duplicate'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- BUTTONS -->

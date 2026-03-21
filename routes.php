@@ -26,3 +26,11 @@ $router->post('/students/create', 'student/studentCreateController.php');
 //stipend
 $router->get('/stipend/form', 'stipend/StipendController.php');
 $router->post('/stipend/form/create', 'stipend/StipendCreateController.php');
+
+//stipend period
+$router->get('/period', 'period/StipendPeriodController.php');
+$router->get('/period/create', 'period/SPeriodCreateController.php');
+$router->post('/period/create', 'period/SPeriodCreateController.php');
+
+//search
+$router->get('/search', 'SearchController.php');

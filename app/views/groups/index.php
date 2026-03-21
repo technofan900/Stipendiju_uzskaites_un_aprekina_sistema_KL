@@ -30,9 +30,9 @@ require base_path('app/views/partials/nav.php');
                 <tbody>
                     <?php foreach($data as $dd) : ?>
                     <tr>
-                        <td><?= $dd['id'] ?? '' ?></td>
-                        <td><?= $dd['group_name'] ?? '' ?></td>
-                        <td><?= $dd['created_at'] ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['id']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['group_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>
 
                         <td>
                             <a class="btn btn-sm btn-warning">Labot</a>
@@ -87,9 +87,9 @@ require base_path('app/views/partials/nav.php');
                 <tbody>
                     <?php foreach($group_subjects as $g_subject) : ?>
                     <tr>
-                        <td><?= $g_subject['id'] ?? '' ?></td>
-                        <td><?= $g_subject['subject_name'] ?? '' ?></td>
-                        <td><?= $g_subject['group_name'] ?? '' ?></td>
+                        <td><?= htmlspecialchars($g_subject['id']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($g_subject['subject_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($g_subject['group_name']) ?? '' ?></td>
 
 
                         <td>

@@ -31,17 +31,17 @@ require base_path('app/views/partials/nav.php');
             <tbody>   
             <?php foreach ($data as $dd) : ?>
                 <tr>
-                    <td><?= $dd['id'] ?? '' ?></td>
-                    <td><?= $dd['full_name'] ?? '' ?></td>
-                    <td><?= $dd['group_name'] ?? '' ?></td>
-                    <td><?= $dd['period_group'] ?? '' ?></td>
-                    <td><?= $dd['average_grade'] ?? '' ?></td>
-                    <td><?= $dd['failed_subjects_count'] ?? '' ?></td>
-                    <td><?= $dd['absences'] ?? '' ?></td>
-                    <td><?= $dd['base_stipend'] ?? '' ?></td>
-                    <td><?= $dd['activity_bonus'] ?? '' ?></td>
-                    <td><?= $dd['total_stipend'] ?? '' ?></td>
-                    <td><?= $dd['created_at'] ?? '' ?></td>                    
+                    <td><?= htmlspecialchars($dd['id']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['full_name']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['group_name']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['period_group']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['average_grade']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['failed_subjects_count'])  ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['absences']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['base_stipend']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['activity_bonus']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['total_stipend']) ?? '' ?></td>
+                    <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>                    
                     <td>
                         <a href="/subjects/edit/<?= $dd['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
                         <!-- DELETE (universal) -->

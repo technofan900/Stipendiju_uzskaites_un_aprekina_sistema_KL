@@ -1,129 +1,144 @@
-    <?php
+<?php
 
-    use Core\App;
-    use Core\Database;
+use Core\App;
+use Core\Database;
 
+try {
     $db = App::resolve(Database::class);
+} catch (\Exception $e) {
+    error_log("Neizdevās izveidot datubāzes savienojumu: " . $e->getMessage());
+    die("Sistēma šobrīd nav pieejama. Lūdzu, mēģiniet vēlāk.");
+}
 
-    function avg_grade(array $grades): float {
+// Functions for stipend calculation with try/catch inside if needed
+function avg_grade(array $grades): float {
+    try {
         $grade_count = count($grades);
         $grade_sum = 0;
-        foreach($grades as $grade) {
+        foreach ($grades as $grade) {
             $grade_sum += (int) $grade['grade'];
         }
-        return round((float) $grade_sum / (float) $grade_count,2);
+        return round((float) $grade_sum / max(1, (float) $grade_count), 2);
+    } catch (\Exception $e) {
+        error_log("Kļūda aprēķinot vidējo atzīmi: " . $e->getMessage());
+        return 0;
     }
-        
-    function failing_grade(array $grades): int {
+}
+
+function failing_grade(array $grades): int {
+    try {
         $fail = 0;
-        foreach($grades as $grade) {
-            if ($grade['category'] === 'P') {
-                if((int) $grade['grade'] < 5) {
-                    $fail++;
-                }
-            } else {
-                if ($grade['category'] === 'V') {
-                    if((int) $grade['grade'] < 4) {
-                        $fail++;
-                    }
-                }
+        foreach ($grades as $grade) {
+            if ($grade['category'] === 'P' && (int)$grade['grade'] < 5) {
+                $fail++;
+            } elseif ($grade['category'] === 'V' && (int)$grade['grade'] < 4) {
+                $fail++;
             }
         }
         return $fail;
+    } catch (\Exception $e) {
+        error_log("Kļūda aprēķinot neveiksmīgās atzīmes: " . $e->getMessage());
+        return 0;
     }
+}
 
-    function base_stipend(float $avg_grade, int $failed_grades, int $absences): float {
-        $base = 0;
-        if ($absences >= 2 and $absences <= 8) {
-            $base = 15;
-        } elseif ($absences > 8) {
-            $base = 0;
-        } elseif ($failed_grades >= 2) {
-            $base = 0;
-        }
-
-        if ($avg_grade >= 0 and $avg_grade < 4.0) {
-            $base = 0;
-        } elseif ($avg_grade >= 4.0 and $avg_grade < 6.0) {
-            $base = 15;
-        } elseif ($avg_grade >= 6.0 and $avg_grade < 8.0) {
-            $base = 41;
-        } elseif ($avg_grade >= 8.0 and $avg_grade <= 10) {
-            $base = 81;
-        }
-        return $base;
+function base_stipend(float $avg_grade, int $failed_grades, int $absences): float {
+    try {
+        if ($absences >= 9 || $failed_grades >= 2) return 0;
+        if ($absences >= 2 && $absences <= 8) return 15;
+        if ($avg_grade >= 8.0 && $avg_grade <= 10.0) return 81;
+        if ($avg_grade >= 6.0) return 41;
+        if ($avg_grade >= 4.0) return 16;
+        return 0;
+    } catch (\Exception $e) {
+        error_log("Kļūda aprēķinot bāzes stipendiju: " . $e->getMessage());
+        return 0;
     }
+}
 
-    function extra_stipend(string $extra): float {
-        return round((float) $extra / 6, 2) ;
+function extra_stipend(float $extra): float {
+    try {
+        return round($extra / 6, 2);
+    } catch (\Exception $e) {
+        error_log("Kļūda aprēķinot papildu stipendiju: " . $e->getMessage());
+        return 0;
     }
+}
 
-    function total_stipend(float $base, float $extra): float {
-        $stipend = 0;
-        if($base == 0) {
-            return $stipend;
-        } else {
-            return round($base + $extra, 2);
-        }
-
+function total_stipend(float $base, float $extra): float {
+    try {
+        return $base > 0 ? round($base + $extra, 2) : 0;
+    } catch (\Exception $e) {
+        error_log("Kļūda aprēķinot kopējo stipendiju: " . $e->getMessage());
+        return 0;
     }
+}
 
+// Handle batch POST for multiple students
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['students'])) {
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $period = $_POST['period'] ?? '';
 
-        $student = $_POST['student_id'] ?? '';
-        $groupId = $_POST['group_id'] ?? null;
-        $period = $_POST['period'] ?? '';
+    foreach ($_POST['students'] as $studentData) {
+        try {
+            $studentId = $studentData['student_id'];
+            $groupId = $studentData['group_id'];
+            $absences = (int) ($studentData['absences'] ?? 0);
+            $grades = $studentData['grades'] ?? [];
+            $extra = (float) ($studentData['extra_amount'] ?? 0);
 
-        //used for other variables
-        $grades = $_POST['grades'] ?? '';
+            // Calculations
+            $avg = avg_grade($grades);
+            $fail = failing_grade($grades);
+            $base = base_stipend($avg, $fail, $absences);
+            $extraCalc = extra_stipend($extra);
+            $total = total_stipend($base, $extraCalc);
 
-        $avg_grade = avg_grade($grades) ?? '';
-        $fail_grades = failing_grade($grades) ?? '';
-        $absences = $_POST['absences'] ?? '';
-        $base_stipend = base_stipend($avg_grade, $fail_grades, $absences);
-        $extra_stipend = extra_stipend($_POST['extra_amount']) ?? '';
-        $total_stipend =  total_stipend($base_stipend, $extra_stipend) ?? '';
+            // Insert stipend record
+            $sql = "INSERT INTO student_stipend_records
+                    (student_id, group_id, period_id, average_grade, failed_subjects_count, absences, base_stipend, activity_bonus, total_stipend)
+                    VALUES (:student_id, :group_id, :period_id, :average_grade, :failed_subjects_count, :absences, :base_stipend, :activity_bonus, :total_stipend)";
 
-
-        $sql = "INSERT INTO student_stipend_records 
-        (student_id, group_id, period_id, average_grade, failed_subjects_count, absences, base_stipend, activity_bonus, total_stipend) 
-        VALUES (:student_id, :group_id, :period_id, :average_grade, :failed_subjects_count, :absences, :base_stipend, :activity_bonus, :total_stipend)";
-        $db->query($sql, [
-            'student_id' => $student,
-            'group_id' => $groupId,
-            'period_id' => $period,
-            'average_grade' => $avg_grade,
-            'failed_subjects_count' => $fail_grades,
-            'absences' => $absences,
-            'base_stipend' => $base_stipend,
-            'activity_bonus' => $extra_stipend,
-            'total_stipend' => $total_stipend
-        ]);
-
-
-        // sql for student_grades db
-        $record_id = $db->lastInsertId();
-
-        foreach ($grades as $subjectID => $data) {
-            $grade = $data["grade"];
-            
-            $sql2 = "INSERT INTO student_grades (stipend_record_id, subject_id, grade)
-                    VALUES (:stipend_record_id, :subject_id, :grade)";
-            $db->query($sql2, [
-                'stipend_record_id' => $record_id,
-                'subject_id' => $subjectID,
-                'grade' => $grade
+            $db->query($sql, [
+                'student_id' => $studentId,
+                'group_id' => $groupId,
+                'period_id' => $period,
+                'average_grade' => $avg,
+                'failed_subjects_count' => $fail,
+                'absences' => $absences,
+                'base_stipend' => $base,
+                'activity_bonus' => $extraCalc,
+                'total_stipend' => $total
             ]);
+
+            $recordId = $db->lastInsertId();
+
+            // Insert grades for each subject
+            foreach ($grades as $subjectId => $data) {
+                try {
+                    $db->query("INSERT INTO student_grades (stipend_record_id, subject_id, grade)
+                                VALUES (:stipend_record_id, :subject_id, :grade)", [
+                        'stipend_record_id' => $recordId,
+                        'subject_id' => $subjectId,
+                        'grade' => (int) $data['grade']
+                    ]);
+                } catch (\Exception $e) {
+                    error_log("Kļūda saglabājot atzīmi priekš student_id {$studentId}: " . $e->getMessage());
+                }
+            }
+        } catch (\Exception $e) {
+            error_log("Kļūda apstrādājot student_id {$studentId}: " . $e->getMessage());
         }
-
-        // echo '<pre>';
-        // var_dump($record_id);
-        // var_dump($avg_grade);
-        // var_dump(base_stipend($avg_grade, $fail_grades, $absences));
-        // echo '</pre>';
-
-        header('Location: /');
     }
 
+    header('Location: /');
+    exit();
+}
+
+// Load view
+try {
     view('stipend/form.php');
+} catch (\Exception $e) {
+    error_log("Kļūda ielādējot stipendiju formu: " . $e->getMessage());
+    echo "Diemžēl formu ielādēt neizdevās.";
+}
