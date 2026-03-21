@@ -95,7 +95,6 @@ require base_path('app/views/partials/nav.php');
                         <td><?= htmlspecialchars($grade['grade']) ?? '' ?></td>
 
                         <td>
-                            <a class="btn btn-sm btn-warning">Labot</a>
                             <form method="POST" action="/delete" style="display:inline;">
 
                                 <input type="hidden" name="_method" value="DELETE">

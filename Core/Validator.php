@@ -18,13 +18,22 @@ class Validator
         return preg_match('/^\d{6}-\d{5}$/', $code);
     }
 
-    public static function uniquePersonalCode($code, Database $db)
+    public static function uniquePersonalCode($code, Database $db, $ignoreId = null)
     {
-        $sql = "SELECT COUNT(*) as count FROM students WHERE personal_code = :code";
+        $sql = "SELECT COUNT(*) as count 
+                FROM students 
+                WHERE personal_code = :code";
 
-        $result = $db->query($sql, [
+        $params = [
             'code' => $code
-        ])->find();
+        ];
+
+        if ($ignoreId !== null) {
+            $sql .= " AND id != :id";
+            $params['id'] = $ignoreId;
+        }
+
+        $result = $db->query($sql, $params)->find();
 
         return $result['count'] == 0;
     }
@@ -64,6 +73,16 @@ class Validator
         ])->find();
 
         return !$result; // true if NOT exists
+    }
+
+    public static function uniqueStudentName($string, Database $db) {
+        $sql = "SELECT COUNT(*) as count FROM students WHERE full_name = :full_name";
+
+        $result = $db->query($sql, [
+            'full_name' => $string
+        ])->find();
+
+        return $result["count"] == 0;        
     }
 
     // public static function stipendForm(array $data, array $groupSubjects = []): array

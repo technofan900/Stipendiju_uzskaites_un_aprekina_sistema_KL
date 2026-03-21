@@ -12,7 +12,7 @@ $periods = $periods ?? [];
             <span>Stipendiju periodi</span>
 
             <!-- CREATE BUTTON -->
-            <a href="/period/create" class="btn btn-light btn-sm">
+            <a href="/period/create" class="btn btn-success btn-sm">
                 + Pievienot periodu
             </a>
         </div>
@@ -45,7 +45,7 @@ $periods = $periods ?? [];
                                         <?= htmlspecialchars($p['period'] . ' (' . $p['year'] . ')') ?>
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-sm btn-warning">Labot</a>
+                                        <a href="/period/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
                                         <!-- DELETE (universal) -->
                                         <form method="POST" action="/delete" style="display:inline;">
 

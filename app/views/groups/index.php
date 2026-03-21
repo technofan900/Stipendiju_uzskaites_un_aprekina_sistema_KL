@@ -35,7 +35,7 @@ require base_path('app/views/partials/nav.php');
                         <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>
 
                         <td>
-                            <a class="btn btn-sm btn-warning">Labot</a>
+                            <a href="/group/edit?id=<?= $dd['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
                             <form method="POST" action="/delete" style="display:inline;">
 
                                 <input type="hidden" name="_method" value="DELETE">
@@ -93,7 +93,7 @@ require base_path('app/views/partials/nav.php');
 
 
                         <td>
-                            <a class="btn btn-sm btn-warning">Labot</a>
+                            <a href="/group/edit/<?= $g_subject['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
                             <form method="POST" action="/delete" style="display:inline;">
 
                                 <input type="hidden" name="_method" value="DELETE">

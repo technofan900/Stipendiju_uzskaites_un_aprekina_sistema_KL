@@ -3,16 +3,21 @@ require base_path('app/views/partials/head.php');
 require base_path('app/views/partials/nav.php');
 
 $errors = $errors ?? [];
+// $student should be provided by the controller with existing data
+// $groups should be provided for the select dropdown
 ?>
 
 <div class="container mt-4">
     <div class="card shadow">
-        <div class="card-header bg-success text-white">
-            Pievienot skolēnu
+        <div class="card-header bg-primary text-white">
+            Rediģēt skolēnu
         </div>
 
         <div class="card-body">
-            <form method="POST" action="/students/create">
+            <form method="POST" action="/student/edit?id=<?= $student['id'] ?>">
+
+                <!-- Hidden field for the student ID -->
+                <input type="hidden" name="id" value="<?= htmlspecialchars($student['id']) ?>">
 
                 <!-- GROUP -->
                 <div class="mb-3">
@@ -22,10 +27,10 @@ $errors = $errors ?? [];
                         class="form-select <?= isset($errors['group_id']) ? 'is-invalid' : '' ?>" 
                         required
                     >
-                        <option value="" disabled <?= empty($_POST['group_id']) ? 'selected' : '' ?>>Izvēlies grupu</option>
-                        <?php foreach ($data as $group) : ?>
-                            <option value="<?= $group['id'] ?>" <?= (isset($_POST['group_id']) && $_POST['group_id'] == $group['id']) ? 'selected' : '' ?>>
-                                <?= $group['group_name'] ?>
+                        <option value="" disabled <?= empty($student['group_id']) ? 'selected' : '' ?>>Izvēlies grupu</option>
+                        <?php foreach ($groups as $group) : ?>
+                            <option value="<?= $group['id'] ?>" <?= ($student['group_id'] == $group['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($group['group_name']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -44,7 +49,7 @@ $errors = $errors ?? [];
                         type="text" 
                         name="name_surname" 
                         class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>" 
-                        value="<?= $_POST['name_surname'] ?? '' ?>"
+                        value="<?= htmlspecialchars($student['full_name'] ?? '') ?>"
                         required
                     >
 
@@ -62,7 +67,7 @@ $errors = $errors ?? [];
                         type="text"
                         name="personal_code"
                         class="form-control <?= isset($errors['p_code']) ? 'is-invalid' : '' ?>"
-                        value="<?= trim($_POST['personal_code']) ?? '' ?>"
+                        value="<?= htmlspecialchars($student['personal_code'])  ?? '' ?>"
                         required
                     >
 
@@ -74,7 +79,7 @@ $errors = $errors ?? [];
                 </div>
 
                 <!-- Buttons -->
-                <button type="submit" class="btn btn-success">Saglabāt</button>
+                <button type="submit" class="btn btn-primary">Saglabāt izmaiņas</button>
                 <a href="/students" class="btn btn-secondary">Atpakaļ</a>
 
             </form>
