@@ -12,7 +12,6 @@ $router->post('/subjects/create', 'subject/SubjectCreateController.php');
 $router->get('/subject/edit', 'subject/SubjectEditController.php');
 $router->post('/subject/edit', 'subject/SubjectEditController.php');
 
-
 //groups
 $router->get('/groups', 'group/GroupController.php');
 $router->get('/groups/create', 'group/GroupCreateController.php');

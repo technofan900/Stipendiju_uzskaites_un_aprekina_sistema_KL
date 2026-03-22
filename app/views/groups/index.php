@@ -93,21 +93,19 @@ require base_path('app/views/partials/nav.php');
 
 
                         <td>
-                            <a href="/group/edit/<?= $g_subject['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
+                            <a href="/groups/bindSubject/edit?id=<?= $g_subject['id'] ?>" 
+                            class="btn btn-sm btn-warning">
+                                Labot
+                            </a>
+
                             <form method="POST" action="/delete" style="display:inline;">
-
                                 <input type="hidden" name="_method" value="DELETE">
-
                                 <input type="hidden" name="table" value="group_subjects">
-
                                 <input type="hidden" name="id" value="<?= $g_subject['id'] ?>">
-
                                 <input type="hidden" name="redirect" value="/groups">
-
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Dzēst ierakstu?')">
                                     Dzēst
                                 </button>
-
                             </form>
                         </td>
                     </tr>

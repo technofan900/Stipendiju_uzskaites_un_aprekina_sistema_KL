@@ -85,4 +85,63 @@ class Validator
         return $result["count"] == 0;        
     }
 
+    public static function validateStipend(array $students, $period): array
+    {
+        $errors = [];
+
+        // period check
+        if (!isset($period) || $period === '') {
+            $errors['period'] = "Izvēlies periodu";
+        }
+
+        // students check
+        if (empty($students)) {
+            $errors['students'] = "Nav studentu";
+            return $errors;
+        }
+
+        foreach ($students as $sid => $student) {
+
+            // absences
+            if (!isset($student['absences']) || !is_numeric($student['absences'])) {
+                $errors["absences_$sid"] = "Nepareizi kavējumi";
+            } elseif ($student['absences'] < 0) {
+                $errors["absences_$sid"] = "Kavējumi nevar būt negatīvi";
+            }
+
+            // extra
+            if (!isset($student['extra_amount']) || !is_numeric($student['extra_amount'])) {
+                $errors["extra_$sid"] = "Nepareiza summa";
+            } elseif ($student['extra_amount'] < 0) {
+                $errors["extra_$sid"] = "Summa nevar būt negatīva";
+            }
+
+            // grades
+            if (!empty($student['grades'])) {
+
+                foreach ($student['grades'] as $subjectId => $gradeData) {
+
+                    if (!isset($gradeData['grade']) || !is_numeric($gradeData['grade'])) {
+                        $errors["grade_{$sid}_{$subjectId}"] = "Nepareiza atzīme";
+                        continue;
+                    }
+
+                    $grade = (float)$gradeData['grade'];
+
+                    if ($grade < 0 || $grade > 10) {
+                        $errors["grade_{$sid}_{$subjectId}"] = "Atzīmei jābūt 0–10";
+                    }
+
+                    if (!isset($gradeData['category'])) {
+                        $errors["category_{$sid}_{$subjectId}"] = "Nav kategorijas";
+                    }
+
+                }
+
+            }
+
+        }
+
+        return $errors;
+    }
 }
