@@ -43,7 +43,6 @@ require base_path('app/views/partials/nav.php');
                     <td><?= htmlspecialchars($dd['total_stipend']) ?? '' ?></td>
                     <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>                    
                     <td>
-                        <a href="/subjects/edit/<?= $dd['id'] ?>" class="btn btn-sm btn-warning">Labot</a>
                         <!-- DELETE (universal) -->
                         <form method="POST" action="/delete" style="display:inline;">
 

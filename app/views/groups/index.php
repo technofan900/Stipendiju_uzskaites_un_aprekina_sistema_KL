@@ -93,11 +93,6 @@ require base_path('app/views/partials/nav.php');
 
 
                         <td>
-                            <a href="/groups/bindSubject/edit?id=<?= $g_subject['id'] ?>" 
-                            class="btn btn-sm btn-warning">
-                                Labot
-                            </a>
-
                             <form method="POST" action="/delete" style="display:inline;">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="table" value="group_subjects">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2026 at 07:42 PM
+-- Generation Time: Mar 22, 2026 at 10:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,6 +48,14 @@ CREATE TABLE `groups` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`id`, `group_name`, `created_at`) VALUES
+(6, '10_grupa', '2026-03-21 13:05:01'),
+(7, 'prog.2028', '2026-03-21 13:05:10');
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +67,14 @@ CREATE TABLE `group_subjects` (
   `group_id` int(11) DEFAULT NULL,
   `subject_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `group_subjects`
+--
+
+INSERT INTO `group_subjects` (`id`, `group_id`, `subject_id`) VALUES
+(9, 6, 22),
+(11, 6, 25);
 
 -- --------------------------------------------------------
 
@@ -79,7 +95,7 @@ CREATE TABLE `stipend_periods` (
 --
 
 INSERT INTO `stipend_periods` (`id`, `year`, `period`, `period_group`, `created_at`) VALUES
-(2, 2026, '2. semestris', '6 mēneši', '2026-03-17 23:01:04');
+(4, 2028, '1. semestris', '6 mēneši', '2026-03-21 17:58:54');
 
 -- --------------------------------------------------------
 
@@ -94,6 +110,14 @@ CREATE TABLE `students` (
   `personal_code` varchar(20) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `group_id`, `full_name`, `personal_code`, `created_at`) VALUES
+(9, 6, 'Jane Does', '120705-20757', '2026-03-21 13:33:35'),
+(10, 6, 'John doe', '120705-20759', '2026-03-21 13:57:08');
 
 -- --------------------------------------------------------
 
@@ -140,6 +164,14 @@ CREATE TABLE `subjects` (
   `category_type` enum('P','V') DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `subject_name`, `category_type`, `created_at`) VALUES
+(22, 'prog.2026', 'P', '2026-03-21 12:54:02'),
+(25, 'prog.2027', 'V', '2026-03-21 14:01:03');
 
 --
 -- Indexes for dumped tables
@@ -216,43 +248,43 @@ ALTER TABLE `activity_bonus_records`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `group_subjects`
 --
 ALTER TABLE `group_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `stipend_periods`
 --
 ALTER TABLE `stipend_periods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_grades`
 --
 ALTER TABLE `student_grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `student_stipend_records`
 --
 ALTER TABLE `student_stipend_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
