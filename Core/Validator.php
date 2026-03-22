@@ -85,31 +85,4 @@ class Validator
         return $result["count"] == 0;        
     }
 
-    // public static function stipendForm(array $data, array $groupSubjects = []): array
-    // {
-    //     $errors = [];
-
-    //     // Required select inputs
-    //     if (empty($data['group_id'])) {
-    //         $errors['group_id'] = "Izvēlies grupu";
-    //     }
-
-    //     if (empty($data['student_id'])) {
-    //         $errors['student_id'] = "Izvēlies skolēnu";
-    //     }
-
-    //     if (empty($data['period'])) {
-    //         $errors['period'] = "Izvēlies stipendijas periodu";
-    //     }
-
-    //     // Validate grades
-    //     foreach ($groupSubjects as $subject) {
-    //         $subjectId = $subject['id'];
-    //         if (!isset($data['grades'][$subjectId]['grade']) || $data['grades'][$subjectId]['grade'] === '') {
-    //             $errors['grades'][$subjectId] = "Ievadi atzīmi priekšmetam: {$subject['subject_name']}";
-    //         }
-    //     }
-
-    //     return $errors;
-    // }
 }
