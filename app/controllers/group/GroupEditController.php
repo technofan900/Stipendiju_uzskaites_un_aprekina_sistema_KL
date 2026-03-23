@@ -34,9 +34,13 @@ try {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $group_name = $_POST['group_name'] ?? '';
+    $group_name = trim($_POST['group_name']) ?? '';
 
     try {
+
+        if(!$group_name) {
+            $errors['group_name'] = 'Ievadiet grupas nosaukumu';
+        }
 
         if (!Validator::uniqueGroupName($group_name, $db)) {
             $errors['group_name'] = 'Šāda grupa jau eksistē';
