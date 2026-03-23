@@ -15,8 +15,8 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $year = $_POST['year'] ?? '';
-    $period = $_POST['period'] ?? '';
-    $group = $_POST['period_group'] ?? '';
+    $period = trim($_POST['period']) ?? '';
+    $group = trim($_POST['period_group']) ?? '';
 
     // validation
 
@@ -26,6 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$period) {
         $errors['period'] = "Ievadiet periodu";
+    }
+
+    if (!$group) {
+        $errors['period_group'] = 'Ievadiet perioda grupu';
     }
 
     if (empty($errors)) {
