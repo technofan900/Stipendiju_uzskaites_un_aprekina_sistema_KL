@@ -49,8 +49,8 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $group_id = $_POST['group_id'] ?? '';
-    $student_name = $_POST['name_surname'] ?? '';
-    $p_code = $_POST['personal_code'] ?? '';
+    $student_name = trim($_POST['name_surname'] ?? '');
+    $p_code = trim($_POST['personal_code'] ?? '');
 
 
     // unique check

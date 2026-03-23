@@ -24,8 +24,8 @@ try {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = $_POST['name_surname'] ?? '';
-    $p_code = $_POST['personal_code'] ?? '';
+    $name = trim($_POST['name_surname'] ?? '');
+    $p_code = trim($_POST['personal_code'] ?? '');
     $group_id = $_POST['group_id'] ?? null;
 
     if (!$name) {
