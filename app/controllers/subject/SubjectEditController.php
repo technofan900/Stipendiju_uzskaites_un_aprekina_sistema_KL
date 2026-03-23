@@ -43,16 +43,16 @@ try {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = $_POST['subject_name'] ?? '';
+    $name = trim($_POST['subject_name']) ?? '';
     $type = $_POST['category_type'] ?? '';
 
 
     if (!$name) {
-        $errors['subject'] = "Ievadi nosaukumu";
+        $errors['subject'] = "Ievadiet priekšmeta nosaukumu";
     }
 
     if (!$type) {
-        $errors['type'] = "Izvēlies kategoriju";
+        $errors['type'] = "Izvēlies priekšmeta kategoriju";
     }
 
 
@@ -60,10 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
 
-        if (
-            $name !== $subject['subject_name'] ||
-            $type !== $subject['category_type']
-        ) {
+        if ($name !== $subject['subject_name'] || $type !== $subject['category_type']) {
             if (!Validator::uniqueSubjectName($name, $type, $db)) {
                 $errors['subject_name'] = "Šāds priekšmets jau eksistē";
             }
