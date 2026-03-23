@@ -10,7 +10,7 @@ require base_path('app/views/partials/nav.php');
         <h2>Skolenu saraksts</h2>
 
         <a href="/students/create" class="btn btn-success">
-            + Pievienot
+            + Pievienot skolēnu
         </a>
     </div>
 
@@ -34,7 +34,7 @@ require base_path('app/views/partials/nav.php');
                     <?php foreach($data as $dd) : ?>
                     <tr>
                         <td><?= htmlspecialchars($dd['id']) ?? '' ?></td>
-                        <td><?= htmlspecialchars($dd['group_name']) ?? '' ?></td>
+                        <td><?= htmlspecialchars($dd['group_name'] ?? 'Bez grupas') ?></td>
                         <td><?= htmlspecialchars($dd['full_name']) ?? '' ?></td>
                         <td><?= htmlspecialchars($dd['personal_code']) ?? '' ?></td>
                         <td><?= htmlspecialchars($dd['created_at']) ?? '' ?></td>

@@ -14,7 +14,7 @@ try {
     // Iegūstam studentus ar grupām
     $sql = 'SELECT st.id, gr.group_name, st.full_name, st.personal_code, st.created_at
             FROM students st
-            JOIN groups gr ON gr.id = st.group_id';
+            LEFT JOIN groups gr ON gr.id = st.group_id';
     $data = $db->query($sql)->get();
 } catch (\Exception $e) {
     error_log("Kļūda ielādējot studentus: " . $e->getMessage());
