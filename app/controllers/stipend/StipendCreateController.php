@@ -84,8 +84,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($errors)) {
 
+        $groupId = $_POST['students'][array_key_first($_POST['students'])]['group_id'] ?? null;
+
+        $groups = $db->query("SELECT * FROM groups")->get();
+
+        $periods = $db->query("SELECT * FROM stipend_periods")->get();
+
+        $studentsList = [];
+        $subjects = [];
+
+        if ($groupId) {
+
+            $studentsList = $db->query(
+                "SELECT * FROM students WHERE group_id = :id",
+                ['id' => $groupId]
+            )->get();
+
+            $subjects = $db->query(
+                "SELECT s.id, s.subject_name, s.category_type
+                FROM group_subjects gs
+                JOIN subjects s ON s.id = gs.subject_id
+                WHERE gs.group_id = :id",
+                ['id' => $groupId]
+            )->get();
+        }
+
         view('stipend/form.php', [
-            'errors' => $errors
+
+            'errors' => $errors,
+            'groupId' => $groupId,
+            'groups' => $groups,
+            'periods' => $periods,
+            'students' => $studentsList,
+            'group_subjects' => $subjects,
+            'old' => $_POST['students'],
+            'old_period' => $_POST['period'] ?? null
+
         ]);
 
         return;

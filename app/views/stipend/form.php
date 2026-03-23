@@ -8,6 +8,8 @@ $groups = $groups ?? [];
 $periods = $periods ?? [];
 $group_subjects = $group_subjects ?? [];
 $errors = $errors ?? [];
+$old = $old ?? [];
+$old_period = $old_period ?? ''; 
 ?>
 
 <div class="container mt-4">
@@ -77,7 +79,10 @@ $errors = $errors ?? [];
 
                             <?php foreach ($periods as $period): ?>
 
-                                <option value="<?= $period['id'] ?>">
+                                <option
+                                    value="<?= $period['id'] ?>"
+                                    <?= $old_period == $period['id'] ? 'selected' : '' ?> 
+                                >
                                     <?= $period['period'] ?>
                                 </option>
 
@@ -165,7 +170,8 @@ $errors = $errors ?? [];
                                             class="form-control form-control-sm <?= isset($errors[$absErr]) ? 'is-invalid' : '' ?>"
 
                                             min="0"
-                                            value="0"
+
+                                            value="<?= $old[$student['id']]['absences'] ?? 0 ?>" 
                                         >
 
                                         <?php if (!empty($errors[$absErr])): ?>
@@ -200,7 +206,8 @@ $errors = $errors ?? [];
 
                                                 min="0"
                                                 max="10"
-                                                value="0"
+
+                                                value="<?= $old[$student['id']]['grades'][$subject['id']]['grade'] ?? 0 ?>" 
                                             >
 
 
@@ -241,7 +248,8 @@ $errors = $errors ?? [];
                                             class="form-control form-control-sm <?= isset($errors[$extraErr]) ? 'is-invalid' : '' ?>"
 
                                             step="0.01"
-                                            value="0"
+
+                                            value="<?= $old[$student['id']]['extra_amount'] ?? 0 ?>"
                                         >
 
                                         <?php if (!empty($errors[$extraErr])): ?>
