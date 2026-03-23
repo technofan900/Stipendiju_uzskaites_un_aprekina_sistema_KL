@@ -16,9 +16,10 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $group = $_POST['group_name'] ?? '';
+    $group = trim($group);
 
     if (!$group) {
-        $errors['group'] = "Ievadiet grupas vārdu";
+        $errors['group_name'] = "Ievadiet grupas vārdu";
     }
 
     try {

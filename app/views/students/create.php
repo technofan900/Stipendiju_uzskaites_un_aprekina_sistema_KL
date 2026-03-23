@@ -62,7 +62,7 @@ $errors = $errors ?? [];
                         type="text"
                         name="personal_code"
                         class="form-control <?= isset($errors['p_code']) ? 'is-invalid' : '' ?>"
-                        value="<?= trim($_POST['personal_code']) ?? '' ?>"
+                        value="<?= $_POST['personal_code'] ?? '' ?>"
                         required
                     >
 
