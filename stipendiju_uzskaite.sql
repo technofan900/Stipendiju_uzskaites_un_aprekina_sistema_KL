@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2026 at 10:35 PM
+-- Generation Time: Mar 24, 2026 at 12:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,8 +53,8 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `group_name`, `created_at`) VALUES
-(6, '10_grupa', '2026-03-21 13:05:01'),
-(7, 'prog.2028', '2026-03-21 13:05:10');
+(14, 'grupa_10', '2026-03-23 12:32:02'),
+(15, '9_grupa', '2026-03-24 13:03:57');
 
 -- --------------------------------------------------------
 
@@ -73,8 +73,7 @@ CREATE TABLE `group_subjects` (
 --
 
 INSERT INTO `group_subjects` (`id`, `group_id`, `subject_id`) VALUES
-(9, 6, 22),
-(11, 6, 25);
+(15, 14, 22);
 
 -- --------------------------------------------------------
 
@@ -116,8 +115,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `group_id`, `full_name`, `personal_code`, `created_at`) VALUES
-(9, 6, 'Jane Does', '120705-20757', '2026-03-21 13:33:35'),
-(10, 6, 'John doe', '120705-20759', '2026-03-21 13:57:08');
+(12, 15, 'kdpawerf', '120705-20756', '2026-03-24 13:03:36');
 
 -- --------------------------------------------------------
 
@@ -248,43 +246,43 @@ ALTER TABLE `activity_bonus_records`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `group_subjects`
 --
 ALTER TABLE `group_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `stipend_periods`
 --
 ALTER TABLE `stipend_periods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `student_grades`
 --
 ALTER TABLE `student_grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `student_stipend_records`
 --
 ALTER TABLE `student_stipend_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
@@ -307,7 +305,7 @@ ALTER TABLE `group_subjects`
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `fk_students_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_students_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_grades`
